@@ -389,7 +389,7 @@ do_analysis(Files, Options, Plt, PltInfo) ->
 			   use_contracts = Options#options.use_contracts,
 			   callgraph_file = Options#options.callgraph_file,
                            solvers = Options#options.solvers,
-                           tolerant_record_constr = Options#options.tolerant_record_constr},
+                           tolerant_record_constr = true},
   State3 = start_analysis(State2, InitAnalysis),
   {T1, _} = statistics(wall_clock),
   Return = cl_loop(State3),
