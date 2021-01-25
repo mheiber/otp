@@ -138,7 +138,8 @@
 		   timing         = false          :: boolean() | 'debug',
 		   timing_server  = none           :: dialyzer_timing:timing_server(),
 		   callgraph_file = ""             :: file:filename(),
-                   solvers                         :: [solver()]}).
+		   solvers                         :: [solver()],
+		   tolerant_record_constr = false  :: boolean()}).
 
 -record(options, {files           = []		   :: [file:filename()],
 		  files_rec       = []		   :: [file:filename()],

@@ -52,8 +52,12 @@ end_per_group(_GroupName, Config) ->
 smoke(Config) ->
     Code = <<"-module(typer_test_module).
              -compile([export_all,nowarn_export_all]).
+             -record(rec, {field  :: number()}).
              a(L) ->
-               L ++ [1,2,3].">>,
+               L ++ [1,2,3].
+
+             rec_constr() ->
+                #rec{field = an_atom}.">>,
     PrivDir = proplists:get_value(priv_dir, Config),
     Src = filename:join(PrivDir, "typer_test_module.erl"),
     ok = file:write_file(Src, Code),
@@ -62,6 +66,7 @@ smoke(Config) ->
            "^%% File:",
            "^%% ----",
            "^-spec a",
+           "^-spec rec_constr\\(\\) -> none\\(\\)\\.", %\) -> none\(\)\.",
            "^_OK_"],
     run(Config, Args, Src, Res),
     ok.

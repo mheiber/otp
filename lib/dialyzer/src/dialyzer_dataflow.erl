@@ -1250,7 +1250,7 @@ handle_tuple(Tree, Map, State) ->
                       Msg = {record_constr, [RecC, FieldDiffs]},
                       State2 = state__add_warning(State1, ?WARN_MATCHING,
                                                   Tree, Msg),
-                      {State2, Map1, t_none()};
+                      {State2, Map1, TupleType};
                     false ->
                       case bind_pat_vars(Elements, t_tuple_args(RecType),
                                          [], Map1, State1) of
@@ -1260,7 +1260,7 @@ handle_tuple(Tree, Map, State) ->
                                   format_type(ErrorType, State1)]},
                           State2 = state__add_warning(State1, ?WARN_MATCHING,
                                                       Tree, Msg),
-                          {State2, Map1, t_none()};
+                          {State2, Map1, TupleType};
                         {error, opaque, ErrorPat, ErrorType, OpaqueType} ->
                           OpaqueStr = format_type(OpaqueType, State1),
                           Name = field_name(Elements, ErrorPat, FieldNames),
@@ -1271,14 +1271,14 @@ handle_tuple(Tree, Map, State) ->
                                   OpaqueStr, OpaqueStr]},
                           State2 = state__add_warning(State1, ?WARN_OPAQUE,
                                                       Tree, Msg),
-                          {State2, Map1, t_none()};
+                          {State2, Map1, TupleType};
                         {error, record, ErrorPat, ErrorType, _} ->
                           Msg = {record_match,
                                  [format_patterns(ErrorPat),
                                   format_type(ErrorType, State1)]},
                           State2 = state__add_warning(State1, ?WARN_MATCHING,
                                                       Tree, Msg),
-                          {State2, Map1, t_none()};
+                          {State2, Map1, TupleType};
                         {Map2, ETypes} ->
                           {State1, Map2, t_tuple(ETypes)}
                       end
